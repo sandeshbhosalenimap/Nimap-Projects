@@ -1,0 +1,10 @@
+﻿
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2><i>  The Product Is Deleted Successfully</i></h2>
+
+<div>
+    @Html.ActionLink("Back to List", "ProductList", new { CategoryId = @Session["DeleteID"] }, null)
+</div>
