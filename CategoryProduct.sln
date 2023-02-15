@@ -5,6 +5,13 @@ VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CategoryProduct", "CategoryProduct\CategoryProduct.csproj", "{1D337AB2-4E75-4711-9BB9-9D86FBBBB620}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{049CAE38-8D6F-4A00-A12F-9595EBCECB99}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositoryPattern", "RepositoryPattern\RepositoryPattern.csproj", "{2445C5A1-F0E7-4D0E-BF63-DFA1CB3C3BF4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +22,10 @@ Global
 		{1D337AB2-4E75-4711-9BB9-9D86FBBBB620}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D337AB2-4E75-4711-9BB9-9D86FBBBB620}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D337AB2-4E75-4711-9BB9-9D86FBBBB620}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2445C5A1-F0E7-4D0E-BF63-DFA1CB3C3BF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2445C5A1-F0E7-4D0E-BF63-DFA1CB3C3BF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2445C5A1-F0E7-4D0E-BF63-DFA1CB3C3BF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2445C5A1-F0E7-4D0E-BF63-DFA1CB3C3BF4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

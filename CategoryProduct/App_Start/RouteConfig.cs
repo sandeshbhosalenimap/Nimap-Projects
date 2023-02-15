@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
+
 namespace CategoryProduct
 {
     public class RouteConfig
@@ -16,7 +17,7 @@ namespace CategoryProduct
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Category", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "AuthenticationPart", action = "LogIn", id = UrlParameter.Optional }
             );
         }
     }

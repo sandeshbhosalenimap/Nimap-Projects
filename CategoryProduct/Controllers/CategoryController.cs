@@ -10,75 +10,89 @@ using System.Data.SqlClient;
 using System.Web.Security;
 using System.Threading.Tasks;
 
+using System.Security.RightsManagement;
+
+using CategoryProduct.RepositoryPattern.ServiceLayer.CategoryServiceLayer;
+
 namespace CategoryProduct.Controllers
 {
-    
     public class CategoryController : Controller
     {
-        DataBase db = new DataBase();
-         [Authorize]
-        public async Task<ActionResult> Index(double b = 3, int a = 1)
+        private IActive _active;
+        private IAddCategory _addCategory;
+        private IDeactive _deactive;
+        private IGetAllCategoryList _getAllCategoryList;
+        private INumberOfPagesOfCategory _numberOfPagesOfCategory;
+        private IReport _report;
+
+        public CategoryController(IActive active, IAddCategory addCategory, IDeactive deactive, IGetAllCategoryList getAllCategoryList, INumberOfPagesOfCategory numberOfPagesOfCategory, IReport report)
         {
-            double dataCount = db.Categories.Count();
-
-
-            SqlParameter[] valu = new SqlParameter[]
-           {
-                new SqlParameter("@pagiSize",b),
-                new SqlParameter("@PageIndex",a)
-           };
-
-            var data = await db.Categories.SqlQuery("Sp_CategoryPagging @PageIndex , @pagiSize", valu).ToListAsync();
-            ViewBag.TotalPages = Math.Ceiling(dataCount / b);
-
-            return View(data);
+            _active = active;
+            _addCategory = addCategory;
+            _deactive = deactive;
+            _getAllCategoryList = getAllCategoryList;
+            _numberOfPagesOfCategory = numberOfPagesOfCategory;
+            _report = report;
         }
 
-       
+        [AllowAnonymous]
+        public async Task<ActionResult> Index(double b = 3, int a = 1)
+        {
+            var CategoryList = await _getAllCategoryList.GetAllCategory(b, a);
+            ViewBag.TotalPages = _numberOfPagesOfCategory.GetNumberOfPagesOfCategory(b);
+
+            return View(CategoryList);
+        }
+
+        
+        [Authorize(Roles = "admin")]
         public ActionResult AddCategory()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult> AddCategory(Category c)
         {
-              db.Categories.Add(c);
-           await db.SaveChangesAsync();
+            if (ModelState.IsValid)
+            {
+                await _addCategory.AddCategoryInList(c);
+            }
+            else { return View("Index"); }
+
             return View();
         }
 
 
-         public async Task<ActionResult> Active(int CategoryId , int a=1)
+        [Authorize(Roles = "hr")]
+        public async Task<ActionResult> Active(int CategoryId, int a = 1)
         {
-            SqlParameter[] valu = new SqlParameter[]
-           {
-                new SqlParameter("@CategoryId",CategoryId),
-                new SqlParameter("@Status",a)
-           };
-           await db.Database.ExecuteSqlCommandAsync("exec sp_ActiveDeactive @CategoryId,@Status ", valu);
-            return RedirectToAction ("Index");  
-      
+            await _active.ActiveMethod(CategoryId, a);
+            return RedirectToAction("Index");
         }
 
-
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult> Deactive(int CategoryId, int a = 0)
         {
-            SqlParameter[] valu = new SqlParameter[]
-           {
-                new SqlParameter("@CategoryId",CategoryId),
-                new SqlParameter("@Status",a)
-           };
-           await db.Database.ExecuteSqlCommandAsync("exec sp_ActiveDeactive @CategoryId,@Status ", valu);
+            await _deactive.DeactiveMethod(CategoryId, a);
             return RedirectToAction("Index");
 
         }
 
+        [AllowAnonymous]
         public ActionResult Logout()
         {
-
             FormsAuthentication.SignOut();
             return RedirectToAction("LogIn", "AuthenticationPart");
         }
+
+        [Authorize(Roles = "admin")]
+        public async Task<ActionResult> ReportMethd()
+        {
+            List<Report> report = await _report.ReportMethd();
+            return View(report);
+        }
+
     }
 }

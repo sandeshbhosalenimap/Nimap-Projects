@@ -1,0 +1,12 @@
+C:\Users\HP\source\repos\CategoryProduct\RepositoryPattern\obj\Debug\RepositoryPattern.csproj.AssemblyReference.cache
+C:\Users\HP\source\repos\CategoryProduct\RepositoryPattern\obj\Debug\RepositoryPattern.csproj.CoreCompileInputs.cache
+C:\Users\HP\source\repos\CategoryProduct\RepositoryPattern\bin\Debug\RepositoryPattern.dll.config
+C:\Users\HP\source\repos\CategoryProduct\RepositoryPattern\bin\Debug\RepositoryPattern.dll
+C:\Users\HP\source\repos\CategoryProduct\RepositoryPattern\bin\Debug\RepositoryPattern.pdb
+C:\Users\HP\source\repos\CategoryProduct\RepositoryPattern\bin\Debug\EntityFramework.dll
+C:\Users\HP\source\repos\CategoryProduct\RepositoryPattern\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\HP\source\repos\CategoryProduct\RepositoryPattern\bin\Debug\EntityFramework.xml
+C:\Users\HP\source\repos\CategoryProduct\RepositoryPattern\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\HP\source\repos\CategoryProduct\RepositoryPattern\obj\Debug\RepositoryPattern.csproj.CopyComplete
+C:\Users\HP\source\repos\CategoryProduct\RepositoryPattern\obj\Debug\RepositoryPattern.dll
+C:\Users\HP\source\repos\CategoryProduct\RepositoryPattern\obj\Debug\RepositoryPattern.pdb

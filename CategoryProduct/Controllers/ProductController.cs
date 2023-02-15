@@ -1,4 +1,7 @@
-﻿using CategoryProduct.Models;
+﻿
+using CategoryProduct.Models;
+using CategoryProduct.RepositoryPattern.ServiceLayer.ProductServiceLayer;
+
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -11,85 +14,82 @@ using System.Web.Mvc;
 
 namespace CategoryProduct.Controllers
 {
-    [Authorize]
+
     public class ProductController : Controller
     {
-        DataBase db = new DataBase();
 
-       
+        private ICreateProduct _createProduct;
+        private IDelete _delete;
+        private IDetails _details;
+        private IEditProduct _editProduct;
+        private INumberOfPage _numberOfPage;
+        private IProductList _productList;
 
-        public async Task<ActionResult> ProductList(int CategoryID , double b=3 , int a=1 )
+        public ProductController(ICreateProduct createProduct, IDelete delete, IDetails details, IEditProduct editProduct, INumberOfPage numberOfPage, IProductList productList)
         {
-            
+            _createProduct = createProduct;
+            _delete = delete;
+            _details = details;
+            _editProduct = editProduct;
+            _numberOfPage = numberOfPage;
+            _productList = productList;
+
+        }
+
+        public async Task<ActionResult> ProductList(int CategoryID, double b = 3, int a = 1)
+        {
             Session["CategoryIDForList"] = CategoryID;
-             double Count = db.Products.Where(c => c.CategoryId == CategoryID).Count();
-
-            SqlParameter[] value = new SqlParameter[]
-            {
-                 new SqlParameter("@CategoryId"  , CategoryID),
-                 new SqlParameter("@PageSize"  , b),
-                 new SqlParameter("@PageIndex"  , a)
-            };
-
-            ViewBag.TotalPagesOfProduct = Math.Ceiling(Count / b);
-            var data =  await db.Products.SqlQuery("sp_ProductPaggig @CategoryID  ,@PageIndex ,  @PageSize  ", value).ToListAsync();    
-          
-            return View(data);
+            var ProductList = await _productList.ProductList(CategoryID, b, a);
+            ViewBag.TotalPagesOfProduct = _numberOfPage.NumberOfPagesOfproductList(CategoryID, b);
+            return View(ProductList); ;
         }
 
         public ActionResult Create(int CategoryID)
         {
-             Session["CategoryID"] = CategoryID;
-             return View();
+            Session["CategoryID"] = CategoryID;
+            return View();
         }
-
 
         [HttpPost]
         public async Task<ActionResult> Create(Product p)
         {
-            db.Products.Add(p);
-            await db.SaveChangesAsync();
-
+            if (ModelState.IsValid)
+            {
+                await _createProduct.CreateProduct(p);
+            }
             return View();
+
         }
-
-
-        
         public async Task<ActionResult> Edit(int ID)
-        { 
-            Product data  = await db.Products.Where( c => c.ProductId== ID).FirstOrDefaultAsync();
-            Session["EditID"] = data.CategoryId;
-           
-            return View(data);
+        {
+            Product DetailsOfProduct = await _details.ProductDetails(ID);
+            Session["EditID"] = DetailsOfProduct.CategoryId;
+            return View(DetailsOfProduct);
         }
 
-        [ HttpPost]  
+        [HttpPut]
         public async Task<ActionResult> Edit(Product p)
         {
-            db.Entry(p).State = EntityState.Modified;
-            db.SaveChangesAsync();   
+            if (ModelState.IsValid)
+            {
+                await _editProduct.EditProductDetails(p);
+            }
             return View();
         }
 
         public async Task<ActionResult> Details(int ID)
         {
-            DataBase db = new DataBase();
-            var products = await db.Products.SingleAsync(c => c.ProductId == ID);
-            return View(products);
+            Product DetailsOfProduct = await _details.ProductDetails(ID);
+            return View(DetailsOfProduct);
         }
 
-  
         public async Task<ActionResult> Delete(int ID)
         {
-            DataBase db = new DataBase();   
-            Product data = await db.Products.Where(m => m.ProductId == ID).FirstOrDefaultAsync();
-            Session["DeleteID"] = data.CategoryId;
+            Product DetailsOfProduct = await _details.ProductDetails(ID);
+            Session["DeleteID"] = DetailsOfProduct.CategoryId;
+            await _delete.Delete(ID);
+            return View();
 
-              db.Entry(data).State = EntityState.Deleted;
-              await db.SaveChangesAsync();
-
-              return View();
-    
         }
     }
 }

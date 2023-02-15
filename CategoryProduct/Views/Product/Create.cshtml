@@ -5,7 +5,7 @@
 }
 
 <h2>Create</h2>
-@Session["CategoryID"]
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -47,14 +47,20 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.ProductCreatedBy, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ProductCreatedBy, @Session["CreatedBy"])
+                @Html.ValidationMessageFor(model => model.ProductCreatedBy, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
-<br />
-<br />
 
 <div>
     @Html.ActionLink("Back to List", "ProductList", new { CategoryId = @Session["CategoryID"] }, null)
