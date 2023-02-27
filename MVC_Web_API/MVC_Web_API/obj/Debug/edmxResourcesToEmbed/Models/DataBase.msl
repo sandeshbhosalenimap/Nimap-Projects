@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="cdac2022ModelStoreContainer" CdmEntityContainer="cdac2022Entities">
+    <EntitySetMapping Name="depts">
+      <EntityTypeMapping TypeName="cdac2022Model.dept">
+        <MappingFragment StoreEntitySet="dept">
+          <ScalarProperty Name="deptcode" ColumnName="deptcode" />
+          <ScalarProperty Name="deptname" ColumnName="deptname" />
+          <ScalarProperty Name="budget" ColumnName="budget" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="desigs">
+      <EntityTypeMapping TypeName="cdac2022Model.desig">
+        <MappingFragment StoreEntitySet="desig">
+          <ScalarProperty Name="desigcode" ColumnName="desigcode" />
+          <ScalarProperty Name="designame" ColumnName="designame" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="emps">
+      <EntityTypeMapping TypeName="cdac2022Model.emp">
+        <MappingFragment StoreEntitySet="emp">
+          <ScalarProperty Name="empcode" ColumnName="empcode" />
+          <ScalarProperty Name="empname" ColumnName="empname" />
+          <ScalarProperty Name="deptcode" ColumnName="deptcode" />
+          <ScalarProperty Name="birthdate" ColumnName="birthdate" />
+          <ScalarProperty Name="joindate" ColumnName="joindate" />
+          <ScalarProperty Name="sex" ColumnName="sex" />
+          <ScalarProperty Name="desigcode" ColumnName="desigcode" />
+          <ScalarProperty Name="supcode" ColumnName="supcode" />
+          <ScalarProperty Name="gradecode" ColumnName="gradecode" />
+          <ScalarProperty Name="gradelevel" ColumnName="gradelevel" />
+          <ScalarProperty Name="basicpay" ColumnName="basicpay" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="grades">
+      <EntityTypeMapping TypeName="cdac2022Model.grade">
+        <MappingFragment StoreEntitySet="grade">
+          <ScalarProperty Name="gradecode" ColumnName="gradecode" />
+          <ScalarProperty Name="gradelevel" ColumnName="gradelevel" />
+          <ScalarProperty Name="gradedescription" ColumnName="gradedescription" />
+          <ScalarProperty Name="basic" ColumnName="basic" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="histories">
+      <EntityTypeMapping TypeName="cdac2022Model.history">
+        <MappingFragment StoreEntitySet="history">
+          <ScalarProperty Name="empcode" ColumnName="empcode" />
+          <ScalarProperty Name="changedate" ColumnName="changedate" />
+          <ScalarProperty Name="desigcode" ColumnName="desigcode" />
+          <ScalarProperty Name="gradecode" ColumnName="gradecode" />
+          <ScalarProperty Name="gradelevel" ColumnName="gradelevel" />
+          <ScalarProperty Name="basicpay" ColumnName="basicpay" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="salaries">
+      <EntityTypeMapping TypeName="cdac2022Model.salary">
+        <MappingFragment StoreEntitySet="salary">
+          <ScalarProperty Name="empcode" ColumnName="empcode" />
+          <ScalarProperty Name="salmonth" ColumnName="salmonth" />
+          <ScalarProperty Name="basic" ColumnName="basic" />
+          <ScalarProperty Name="allow" ColumnName="allow" />
+          <ScalarProperty Name="deduct" ColumnName="deduct" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

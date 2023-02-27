@@ -1,0 +1,539 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="cdac2022Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="dept">
+          <Key>
+            <PropertyRef Name="deptcode" />
+          </Key>
+          <Property Name="deptcode" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="deptname" Type="varchar" MaxLength="60" />
+          <Property Name="budget" Type="int" />
+        </EntityType>
+        <EntityType Name="desig">
+          <Key>
+            <PropertyRef Name="desigcode" />
+          </Key>
+          <Property Name="desigcode" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="designame" Type="varchar" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="emp">
+          <Key>
+            <PropertyRef Name="empcode" />
+          </Key>
+          <Property Name="empcode" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="empname" Type="varchar" MaxLength="60" />
+          <Property Name="deptcode" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="birthdate" Type="date" Nullable="false" />
+          <Property Name="joindate" Type="date" Nullable="false" />
+          <Property Name="sex" Type="char" MaxLength="1" />
+          <Property Name="desigcode" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="supcode" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="gradecode" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="gradelevel" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="basicpay" Type="int" />
+        </EntityType>
+        <EntityType Name="grade">
+          <Key>
+            <PropertyRef Name="gradecode" />
+            <PropertyRef Name="gradelevel" />
+          </Key>
+          <Property Name="gradecode" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="gradelevel" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="gradedescription" Type="varchar" MaxLength="60" />
+          <Property Name="basic" Type="int" />
+        </EntityType>
+        <EntityType Name="history">
+          <Key>
+            <PropertyRef Name="empcode" />
+            <PropertyRef Name="changedate" />
+            <PropertyRef Name="desigcode" />
+            <PropertyRef Name="gradecode" />
+            <PropertyRef Name="gradelevel" />
+          </Key>
+          <Property Name="empcode" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="changedate" Type="date" Nullable="false" />
+          <Property Name="desigcode" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="gradecode" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="gradelevel" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="basicpay" Type="int" />
+        </EntityType>
+        <EntityType Name="salary">
+          <Key>
+            <PropertyRef Name="empcode" />
+            <PropertyRef Name="salmonth" />
+          </Key>
+          <Property Name="empcode" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="salmonth" Type="date" Nullable="false" />
+          <Property Name="basic" Type="int" />
+          <Property Name="allow" Type="int" />
+          <Property Name="deduct" Type="int" />
+        </EntityType>
+        <Association Name="FK__emp__44FF419A">
+          <End Role="grade" Type="Self.grade" Multiplicity="1" />
+          <End Role="emp" Type="Self.emp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="grade">
+              <PropertyRef Name="gradecode" />
+              <PropertyRef Name="gradelevel" />
+            </Principal>
+            <Dependent Role="emp">
+              <PropertyRef Name="gradecode" />
+              <PropertyRef Name="gradelevel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__emp__deptcode__4222D4EF">
+          <End Role="dept" Type="Self.dept" Multiplicity="1" />
+          <End Role="emp" Type="Self.emp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dept">
+              <PropertyRef Name="deptcode" />
+            </Principal>
+            <Dependent Role="emp">
+              <PropertyRef Name="deptcode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__emp__desigcode__4316F928">
+          <End Role="desig" Type="Self.desig" Multiplicity="1" />
+          <End Role="emp" Type="Self.emp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="desig">
+              <PropertyRef Name="desigcode" />
+            </Principal>
+            <Dependent Role="emp">
+              <PropertyRef Name="desigcode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__emp__supcode__440B1D61">
+          <End Role="emp" Type="Self.emp" Multiplicity="1" />
+          <End Role="emp1" Type="Self.emp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="emp">
+              <PropertyRef Name="empcode" />
+            </Principal>
+            <Dependent Role="emp1">
+              <PropertyRef Name="supcode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__history__48CFD27E">
+          <End Role="grade" Type="Self.grade" Multiplicity="1" />
+          <End Role="history" Type="Self.history" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="grade">
+              <PropertyRef Name="gradecode" />
+              <PropertyRef Name="gradelevel" />
+            </Principal>
+            <Dependent Role="history">
+              <PropertyRef Name="gradecode" />
+              <PropertyRef Name="gradelevel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__history__desigco__47DBAE45">
+          <End Role="desig" Type="Self.desig" Multiplicity="1" />
+          <End Role="history" Type="Self.history" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="desig">
+              <PropertyRef Name="desigcode" />
+            </Principal>
+            <Dependent Role="history">
+              <PropertyRef Name="desigcode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__history__empcode__46E78A0C">
+          <End Role="emp" Type="Self.emp" Multiplicity="1" />
+          <End Role="history" Type="Self.history" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="emp">
+              <PropertyRef Name="empcode" />
+            </Principal>
+            <Dependent Role="history">
+              <PropertyRef Name="empcode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__salary__empcode__45F365D3">
+          <End Role="emp" Type="Self.emp" Multiplicity="1" />
+          <End Role="salary" Type="Self.salary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="emp">
+              <PropertyRef Name="empcode" />
+            </Principal>
+            <Dependent Role="salary">
+              <PropertyRef Name="empcode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="cdac2022ModelStoreContainer">
+          <EntitySet Name="dept" EntityType="Self.dept" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="desig" EntityType="Self.desig" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="emp" EntityType="Self.emp" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="grade" EntityType="Self.grade" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="history" EntityType="Self.history" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="salary" EntityType="Self.salary" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__emp__44FF419A" Association="Self.FK__emp__44FF419A">
+            <End Role="grade" EntitySet="grade" />
+            <End Role="emp" EntitySet="emp" />
+          </AssociationSet>
+          <AssociationSet Name="FK__emp__deptcode__4222D4EF" Association="Self.FK__emp__deptcode__4222D4EF">
+            <End Role="dept" EntitySet="dept" />
+            <End Role="emp" EntitySet="emp" />
+          </AssociationSet>
+          <AssociationSet Name="FK__emp__desigcode__4316F928" Association="Self.FK__emp__desigcode__4316F928">
+            <End Role="desig" EntitySet="desig" />
+            <End Role="emp" EntitySet="emp" />
+          </AssociationSet>
+          <AssociationSet Name="FK__emp__supcode__440B1D61" Association="Self.FK__emp__supcode__440B1D61">
+            <End Role="emp" EntitySet="emp" />
+            <End Role="emp1" EntitySet="emp" />
+          </AssociationSet>
+          <AssociationSet Name="FK__history__48CFD27E" Association="Self.FK__history__48CFD27E">
+            <End Role="grade" EntitySet="grade" />
+            <End Role="history" EntitySet="history" />
+          </AssociationSet>
+          <AssociationSet Name="FK__history__desigco__47DBAE45" Association="Self.FK__history__desigco__47DBAE45">
+            <End Role="desig" EntitySet="desig" />
+            <End Role="history" EntitySet="history" />
+          </AssociationSet>
+          <AssociationSet Name="FK__history__empcode__46E78A0C" Association="Self.FK__history__empcode__46E78A0C">
+            <End Role="emp" EntitySet="emp" />
+            <End Role="history" EntitySet="history" />
+          </AssociationSet>
+          <AssociationSet Name="FK__salary__empcode__45F365D3" Association="Self.FK__salary__empcode__45F365D3">
+            <End Role="emp" EntitySet="emp" />
+            <End Role="salary" EntitySet="salary" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="cdac2022Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="dept">
+          <Key>
+            <PropertyRef Name="deptcode" />
+          </Key>
+          <Property Name="deptcode" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="deptname" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="budget" Type="Int32" />
+          <NavigationProperty Name="emps" Relationship="Self.FK__emp__deptcode__4222D4EF" FromRole="dept" ToRole="emp" />
+        </EntityType>
+        <EntityType Name="desig">
+          <Key>
+            <PropertyRef Name="desigcode" />
+          </Key>
+          <Property Name="desigcode" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="designame" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="emps" Relationship="Self.FK__emp__desigcode__4316F928" FromRole="desig" ToRole="emp" />
+          <NavigationProperty Name="histories" Relationship="Self.FK__history__desigco__47DBAE45" FromRole="desig" ToRole="history" />
+        </EntityType>
+        <EntityType Name="emp">
+          <Key>
+            <PropertyRef Name="empcode" />
+          </Key>
+          <Property Name="empcode" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="empname" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="deptcode" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="birthdate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="joindate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="sex" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="desigcode" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="supcode" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="gradecode" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="gradelevel" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="basicpay" Type="Int32" />
+          <NavigationProperty Name="dept" Relationship="Self.FK__emp__deptcode__4222D4EF" FromRole="emp" ToRole="dept" />
+          <NavigationProperty Name="desig" Relationship="Self.FK__emp__desigcode__4316F928" FromRole="emp" ToRole="desig" />
+          <NavigationProperty Name="grade" Relationship="Self.FK__emp__44FF419A" FromRole="emp" ToRole="grade" />
+          <NavigationProperty Name="emp1" Relationship="Self.FK__emp__supcode__440B1D61" FromRole="emp" ToRole="emp1" />
+          <NavigationProperty Name="emp2" Relationship="Self.FK__emp__supcode__440B1D61" FromRole="emp1" ToRole="emp" />
+          <NavigationProperty Name="histories" Relationship="Self.FK__history__empcode__46E78A0C" FromRole="emp" ToRole="history" />
+          <NavigationProperty Name="salaries" Relationship="Self.FK__salary__empcode__45F365D3" FromRole="emp" ToRole="salary" />
+        </EntityType>
+        <EntityType Name="grade">
+          <Key>
+            <PropertyRef Name="gradecode" />
+            <PropertyRef Name="gradelevel" />
+          </Key>
+          <Property Name="gradecode" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="gradelevel" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="gradedescription" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="basic" Type="Int32" />
+          <NavigationProperty Name="emps" Relationship="Self.FK__emp__44FF419A" FromRole="grade" ToRole="emp" />
+          <NavigationProperty Name="histories" Relationship="Self.FK__history__48CFD27E" FromRole="grade" ToRole="history" />
+        </EntityType>
+        <EntityType Name="history">
+          <Key>
+            <PropertyRef Name="empcode" />
+            <PropertyRef Name="changedate" />
+            <PropertyRef Name="desigcode" />
+            <PropertyRef Name="gradecode" />
+            <PropertyRef Name="gradelevel" />
+          </Key>
+          <Property Name="empcode" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="changedate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="desigcode" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="gradecode" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="gradelevel" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="basicpay" Type="Int32" />
+          <NavigationProperty Name="desig" Relationship="Self.FK__history__desigco__47DBAE45" FromRole="history" ToRole="desig" />
+          <NavigationProperty Name="emp" Relationship="Self.FK__history__empcode__46E78A0C" FromRole="history" ToRole="emp" />
+          <NavigationProperty Name="grade" Relationship="Self.FK__history__48CFD27E" FromRole="history" ToRole="grade" />
+        </EntityType>
+        <EntityType Name="salary">
+          <Key>
+            <PropertyRef Name="empcode" />
+            <PropertyRef Name="salmonth" />
+          </Key>
+          <Property Name="empcode" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="salmonth" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="basic" Type="Int32" />
+          <Property Name="allow" Type="Int32" />
+          <Property Name="deduct" Type="Int32" />
+          <NavigationProperty Name="emp" Relationship="Self.FK__salary__empcode__45F365D3" FromRole="salary" ToRole="emp" />
+        </EntityType>
+        <Association Name="FK__emp__deptcode__4222D4EF">
+          <End Role="dept" Type="Self.dept" Multiplicity="1" />
+          <End Role="emp" Type="Self.emp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dept">
+              <PropertyRef Name="deptcode" />
+            </Principal>
+            <Dependent Role="emp">
+              <PropertyRef Name="deptcode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__emp__desigcode__4316F928">
+          <End Role="desig" Type="Self.desig" Multiplicity="1" />
+          <End Role="emp" Type="Self.emp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="desig">
+              <PropertyRef Name="desigcode" />
+            </Principal>
+            <Dependent Role="emp">
+              <PropertyRef Name="desigcode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__history__desigco__47DBAE45">
+          <End Role="desig" Type="Self.desig" Multiplicity="1" />
+          <End Role="history" Type="Self.history" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="desig">
+              <PropertyRef Name="desigcode" />
+            </Principal>
+            <Dependent Role="history">
+              <PropertyRef Name="desigcode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__emp__44FF419A">
+          <End Role="grade" Type="Self.grade" Multiplicity="1" />
+          <End Role="emp" Type="Self.emp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="grade">
+              <PropertyRef Name="gradecode" />
+              <PropertyRef Name="gradelevel" />
+            </Principal>
+            <Dependent Role="emp">
+              <PropertyRef Name="gradecode" />
+              <PropertyRef Name="gradelevel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__emp__supcode__440B1D61">
+          <End Role="emp" Type="Self.emp" Multiplicity="1" />
+          <End Role="emp1" Type="Self.emp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="emp">
+              <PropertyRef Name="empcode" />
+            </Principal>
+            <Dependent Role="emp1">
+              <PropertyRef Name="supcode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__history__empcode__46E78A0C">
+          <End Role="emp" Type="Self.emp" Multiplicity="1" />
+          <End Role="history" Type="Self.history" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="emp">
+              <PropertyRef Name="empcode" />
+            </Principal>
+            <Dependent Role="history">
+              <PropertyRef Name="empcode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__salary__empcode__45F365D3">
+          <End Role="emp" Type="Self.emp" Multiplicity="1" />
+          <End Role="salary" Type="Self.salary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="emp">
+              <PropertyRef Name="empcode" />
+            </Principal>
+            <Dependent Role="salary">
+              <PropertyRef Name="empcode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__history__48CFD27E">
+          <End Role="grade" Type="Self.grade" Multiplicity="1" />
+          <End Role="history" Type="Self.history" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="grade">
+              <PropertyRef Name="gradecode" />
+              <PropertyRef Name="gradelevel" />
+            </Principal>
+            <Dependent Role="history">
+              <PropertyRef Name="gradecode" />
+              <PropertyRef Name="gradelevel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="cdac2022Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="depts" EntityType="Self.dept" />
+          <EntitySet Name="desigs" EntityType="Self.desig" />
+          <EntitySet Name="emps" EntityType="Self.emp" />
+          <EntitySet Name="grades" EntityType="Self.grade" />
+          <EntitySet Name="histories" EntityType="Self.history" />
+          <EntitySet Name="salaries" EntityType="Self.salary" />
+          <AssociationSet Name="FK__emp__deptcode__4222D4EF" Association="Self.FK__emp__deptcode__4222D4EF">
+            <End Role="dept" EntitySet="depts" />
+            <End Role="emp" EntitySet="emps" />
+          </AssociationSet>
+          <AssociationSet Name="FK__emp__desigcode__4316F928" Association="Self.FK__emp__desigcode__4316F928">
+            <End Role="desig" EntitySet="desigs" />
+            <End Role="emp" EntitySet="emps" />
+          </AssociationSet>
+          <AssociationSet Name="FK__history__desigco__47DBAE45" Association="Self.FK__history__desigco__47DBAE45">
+            <End Role="desig" EntitySet="desigs" />
+            <End Role="history" EntitySet="histories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__emp__44FF419A" Association="Self.FK__emp__44FF419A">
+            <End Role="grade" EntitySet="grades" />
+            <End Role="emp" EntitySet="emps" />
+          </AssociationSet>
+          <AssociationSet Name="FK__emp__supcode__440B1D61" Association="Self.FK__emp__supcode__440B1D61">
+            <End Role="emp" EntitySet="emps" />
+            <End Role="emp1" EntitySet="emps" />
+          </AssociationSet>
+          <AssociationSet Name="FK__history__empcode__46E78A0C" Association="Self.FK__history__empcode__46E78A0C">
+            <End Role="emp" EntitySet="emps" />
+            <End Role="history" EntitySet="histories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__salary__empcode__45F365D3" Association="Self.FK__salary__empcode__45F365D3">
+            <End Role="emp" EntitySet="emps" />
+            <End Role="salary" EntitySet="salaries" />
+          </AssociationSet>
+          <AssociationSet Name="FK__history__48CFD27E" Association="Self.FK__history__48CFD27E">
+            <End Role="grade" EntitySet="grades" />
+            <End Role="history" EntitySet="histories" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="cdac2022ModelStoreContainer" CdmEntityContainer="cdac2022Entities">
+          <EntitySetMapping Name="depts">
+            <EntityTypeMapping TypeName="cdac2022Model.dept">
+              <MappingFragment StoreEntitySet="dept">
+                <ScalarProperty Name="deptcode" ColumnName="deptcode" />
+                <ScalarProperty Name="deptname" ColumnName="deptname" />
+                <ScalarProperty Name="budget" ColumnName="budget" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="desigs">
+            <EntityTypeMapping TypeName="cdac2022Model.desig">
+              <MappingFragment StoreEntitySet="desig">
+                <ScalarProperty Name="desigcode" ColumnName="desigcode" />
+                <ScalarProperty Name="designame" ColumnName="designame" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="emps">
+            <EntityTypeMapping TypeName="cdac2022Model.emp">
+              <MappingFragment StoreEntitySet="emp">
+                <ScalarProperty Name="empcode" ColumnName="empcode" />
+                <ScalarProperty Name="empname" ColumnName="empname" />
+                <ScalarProperty Name="deptcode" ColumnName="deptcode" />
+                <ScalarProperty Name="birthdate" ColumnName="birthdate" />
+                <ScalarProperty Name="joindate" ColumnName="joindate" />
+                <ScalarProperty Name="sex" ColumnName="sex" />
+                <ScalarProperty Name="desigcode" ColumnName="desigcode" />
+                <ScalarProperty Name="supcode" ColumnName="supcode" />
+                <ScalarProperty Name="gradecode" ColumnName="gradecode" />
+                <ScalarProperty Name="gradelevel" ColumnName="gradelevel" />
+                <ScalarProperty Name="basicpay" ColumnName="basicpay" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="grades">
+            <EntityTypeMapping TypeName="cdac2022Model.grade">
+              <MappingFragment StoreEntitySet="grade">
+                <ScalarProperty Name="gradecode" ColumnName="gradecode" />
+                <ScalarProperty Name="gradelevel" ColumnName="gradelevel" />
+                <ScalarProperty Name="gradedescription" ColumnName="gradedescription" />
+                <ScalarProperty Name="basic" ColumnName="basic" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="histories">
+            <EntityTypeMapping TypeName="cdac2022Model.history">
+              <MappingFragment StoreEntitySet="history">
+                <ScalarProperty Name="empcode" ColumnName="empcode" />
+                <ScalarProperty Name="changedate" ColumnName="changedate" />
+                <ScalarProperty Name="desigcode" ColumnName="desigcode" />
+                <ScalarProperty Name="gradecode" ColumnName="gradecode" />
+                <ScalarProperty Name="gradelevel" ColumnName="gradelevel" />
+                <ScalarProperty Name="basicpay" ColumnName="basicpay" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="salaries">
+            <EntityTypeMapping TypeName="cdac2022Model.salary">
+              <MappingFragment StoreEntitySet="salary">
+                <ScalarProperty Name="empcode" ColumnName="empcode" />
+                <ScalarProperty Name="salmonth" ColumnName="salmonth" />
+                <ScalarProperty Name="basic" ColumnName="basic" />
+                <ScalarProperty Name="allow" ColumnName="allow" />
+                <ScalarProperty Name="deduct" ColumnName="deduct" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
